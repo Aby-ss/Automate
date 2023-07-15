@@ -59,30 +59,17 @@ database.add_column("Supervisor")
 database.add_column("Skills")
 database.add_column("Education")
 
-# Function to create a new SQLite database and table
-def create_database():
+# Function to execute the SQL script from file
+def execute_sql_script(script_file):
     conn = sqlite3.connect("employee.db")
     cursor = conn.cursor()
 
-    cursor.execute(
-        """
-        CREATE TABLE IF NOT EXISTS employees (
-            name TEXT,
-            age INTEGER,
-            position TEXT,
-            employee_id INTEGER,
-            email TEXT,
-            phone TEXT,
-            address TEXT,
-            department TEXT,
-            salary REAL,
-            start_date TEXT,
-            supervisor TEXT,
-            skills TEXT,
-            education TEXT
-        )
-        """
-    )
+    # Read the SQL script from file
+    with open(script_file, "r") as sql_file:
+        sql_script = sql_file.read()
+
+    # Execute the SQL script
+    cursor.executescript(sql_script)
 
     conn.commit()
     conn.close()
@@ -178,7 +165,7 @@ def display_database(rows):
 
 # Main program
 def main():
-    create_database()
+    execute_sql_script("database.sql")
 
     employee_info = get_employee_info()
     add_employee_to_database(employee_info)
