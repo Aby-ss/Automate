@@ -3,7 +3,7 @@ from rich import print
 from rich.panel import Panel
 
 # Mailgun API endpoint and credentials
-MAILGUN_API_KEY = 'your_mailgun_api_key'
+MAILGUN_API_KEY = '262b213e-b924eb47'
 MAILGUN_DOMAIN = 'your_mailgun_domain'
 MAILGUN_API_URL = f'https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/messages'
 
