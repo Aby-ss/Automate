@@ -43,79 +43,39 @@ class Footer:
         grid.add_row("[i]Empowering Growth through Intelligent Automation[/]")
         return Panel(grid, style="white on black")
     
-# Create an empty database table
-database = Table(show_header=True, header_style="bold magenta")
-database.add_column("Name")
-database.add_column("Age")
-database.add_column("Position")
-database.add_column("Employee ID")
-database.add_column("Email")
-database.add_column("Phone")
-database.add_column("Address")
-database.add_column("Department")
-database.add_column("Salary")
-database.add_column("Start Date")
-database.add_column("Supervisor")
-database.add_column("Skills")
-database.add_column("Education")
+    
 
-# Function to execute the SQL script from file
-def execute_sql_script(script_file):
-    conn = sqlite3.connect("employee.db")
-    cursor = conn.cursor()
+def add_employee_data_to_file(employee_info, file_path):
+    with open(file_path, 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(employee_info.values())
 
-    # Read the SQL script from file
-    with open(script_file, "r") as sql_file:
-        sql_script = sql_file.read()
+def print_employee_data_table(file_path):
+    with open(file_path, 'r') as file:
+        reader = csv.reader(file)
+        employee_data = list(reader)
 
-    # Execute the SQL script
-    cursor.executescript(sql_script)
+    table = Table(show_header=True, header_style="bold magenta")
+    table.add_column("Name")
+    table.add_column("Age")
+    table.add_column("Position")
+    table.add_column("Employee ID")
+    table.add_column("Email")
+    table.add_column("Phone")
+    table.add_column("Address")
+    table.add_column("Department")
+    table.add_column("Salary")
+    table.add_column("Start Date")
+    table.add_column("Supervisor")
+    table.add_column("Skills")
+    table.add_column("Education")
 
-    conn.commit()
-    conn.close()
+    for row in employee_data:
+        table.add_row(*row)
 
-# Function to add employee to database
-def add_employee_to_database(employee_info):
-    conn = sqlite3.connect("employee.db")
-    cursor = conn.cursor()
-
-    cursor.execute(
-        """
-        INSERT INTO employees (name, age, position, employee_id, email, phone, address, department,
-                               salary, start_date, supervisor, skills, education)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """,
-        (
-            employee_info["name"],
-            employee_info["age"],
-            employee_info["position"],
-            employee_info["employee_id"],
-            employee_info["email"],
-            employee_info["phone"],
-            employee_info["address"],
-            employee_info["department"],
-            employee_info["salary"],
-            employee_info["start_date"],
-            employee_info["supervisor"],
-            ", ".join(employee_info["skills"]),
-            employee_info["education"]
-        )
-    )
-
-    conn.commit()
-    conn.close()
-
-# Function to retrieve all employees from the database
-def retrieve_employees_from_database():
-    conn = sqlite3.connect("employee.db")
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM employees")
-    rows = cursor.fetchall()
-
-    conn.close()
-
-    return rows
+    console = Console()
+    console.print(Panel.fit("[bold green]Employee Information[/bold green]"))
+    console.print(table)
 
 def get_employee_info():
     console = Console()
@@ -137,42 +97,28 @@ def get_employee_info():
     education = Prompt.ask("Enter education: ", style="bold white")
 
     employee_info = {
-        "name": name,
-        "age": age,
-        "position": position,
-        "employee_id": employee_id,
-        "email": email,
-        "phone": phone,
-        "address": address,
-        "department": department,
-        "salary": salary,
-        "start_date": start_date,
-        "supervisor": supervisor,
-        "skills": skills,
-        "education": education
+        "Name": name,
+        "Age": age,
+        "Position": position,
+        "Employee ID": employee_id,
+        "Email": email,
+        "Phone": phone,
+        "Address": address,
+        "Department": department,
+        "Salary": salary,
+        "Start Date": start_date,
+        "Supervisor": supervisor,
+        "Skills": ", ".join(skills),
+        "Education": education
     }
 
     return employee_info
 
-# Function to display the employee database
-def display_database(rows):
-    for row in rows:
-        database.add_row(row)
+file_path = "employee_data.csv"
 
-    console = Console()
-    console.print(Panel.fit("[bold green]Employee Database[/bold green]"))
-    console.print(database)
-
-# Main program
-def main():
-    execute_sql_script("database.sql")
-
-    employee_info = get_employee_info()
-    add_employee_to_database(employee_info)
-
-    rows = retrieve_employees_from_database()
-    display_database(rows)
-
+employee_info = get_employee_info()
+add_employee_data_to_file(employee_info, file_path)
+print_employee_data_table(file_path)
 
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
