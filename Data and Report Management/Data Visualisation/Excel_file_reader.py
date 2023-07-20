@@ -18,7 +18,6 @@ workbook = openpyxl.load_workbook('Examplery_data.xlsx')
 # Select the active sheet
 sheet = workbook.active
 
-
 # Function to print the cell value of all months
 def gross_profit_values():
     # Define the cell numbers for each month
@@ -36,12 +35,16 @@ def gross_profit_values():
         'Nov': 'P6',
         'Dec': 'Q6'
     }
-    
+
+    panel_content = ""
+
     for month, cell_number in GROSS_PROFIT_month_cells.items():
         cell_value = sheet[cell_number].value
-        print(f"{month} = {cell_number}")
-        print(f"Data: {cell_value}")
-        print()  # Empty line for better readability between months
+        panel_content += f"{month} = {cell_value}\n"
+
+    panel_title = "Gross Profit Values"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
 
 # Call the function to print the cell values of all months
 gross_profit_values()
