@@ -46,5 +46,35 @@ def gross_profit_values():
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     print(panel)
 
+# Function to print the cell value of all months
+def total_expenses_values():
+    # Define the cell numbers for each month
+    TOTAL_EXPENSES_month_cells = {
+        'Jan': 'C7',
+        'Feb': 'D7',
+        'Mar': 'E7',
+        'Apr': 'G7',
+        'May': 'H7',
+        'Jun': 'I7',
+        'Jul': 'K7',
+        'Aug': 'L7',
+        'Sep': 'M7',
+        'Oct': 'O7',
+        'Nov': 'P7',
+        'Dec': 'Q7'
+    }
+
+    panel_content = ""
+
+    for month, cell_number in TOTAL_EXPENSES_month_cells.items():
+        cell_value = sheet[cell_number].value
+        panel_content += f"{month} = {cell_value}\n"
+
+    panel_title = "Total Expenses"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
+
+
 # Call the function to print the cell values of all months
 gross_profit_values()
+total_expenses_values()
