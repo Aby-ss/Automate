@@ -42,3 +42,7 @@ class Footer:
         grid.add_column(justify="center", ratio=1)
         grid.add_row("[i]Empowering Growth through Intelligent Automation[/]")
         return Panel(grid, style="white on black")
+
+layout["Header"].update(Header())
+layout["Footer"].update(Footer())
+print(layout)
