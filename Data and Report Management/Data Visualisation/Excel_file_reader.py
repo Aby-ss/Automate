@@ -110,8 +110,41 @@ def monthly_netprofit_values():
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     print(panel)
 
+# Function to print the cell value of all months
+def year_to_date_netporfit():
+    # Define the cell numbers for each month
+    YEAR_TO_DATE_NETPROFIT_month_cells = {
+        'Jan': 'C9',
+        'Feb': 'D9',
+        'Mar': 'E9',
+        'Apr': 'G9',
+        'May': 'H9',
+        'Jun': 'I9',
+        'Jul': 'K9',
+        'Aug': 'L9',
+        'Sep': 'M9',
+        'Oct': 'O9',
+        'Nov': 'P9',
+        'Dec': 'Q9'
+    }
+
+    panel_content = ""
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    for month, cell_number in YEAR_TO_DATE_NETPROFIT_month_cells.items():
+        cell_value = sheet[cell_number].value
+
+        panel_content += f"{month} = {cell_value}\n"
+
+    panel_title = "Year-to-date Net Profit"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
 
 # Call the function to print the cell values of all months
 gross_profit_values()
 total_expenses_values()
 monthly_netprofit_values()
+year_to_date_netporfit()
