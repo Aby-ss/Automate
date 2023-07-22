@@ -1,5 +1,6 @@
 from datetime import datetime
-from rich import Panel, box
+from rich.panel import Panel
+from rich import print, box
 
 import openpyxl
 from tabulate import tabulate
