@@ -228,5 +228,49 @@ def total_expenses_values_comparison(sheet):
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     print(panel)
     
+# Functions for getting current and previous monthly values
+def monthly_netprofit_values_comparison(sheet):
+    # Define the cell numbers for each month
+    MONTHY_NET_PROFIT_month_cells = {
+        'Jan': 'C8',
+        'Feb': 'D8',
+        'Mar': 'E8',
+        'Apr': 'G8',
+        'May': 'H8',
+        'Jun': 'I8',
+        'Jul': 'K8',
+        'Aug': 'L8',
+        'Sep': 'M8',
+        'Oct': 'O8',
+        'Nov': 'P8',
+        'Dec': 'Q8'
+    }
+
+    def get_previous_month(current_month):
+        months_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        current_index = months_list.index(current_month)
+        previous_index = (current_index - 1) % len(months_list)
+        return months_list[previous_index]
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    current_month = datetime.now().strftime("%b")
+    previous_month = get_previous_month(current_month)
+
+    panel_content = ""
+
+    current_value = sheet[MONTHY_NET_PROFIT_month_cells[current_month]].value
+    previous_value = sheet[MONTHY_NET_PROFIT_month_cells[previous_month]].value
+
+    panel_content += f"\nCurrent Month ({current_month}) Value = {current_value}\n"
+    panel_content += f"Previous Month ({previous_month}) Value = {previous_value}\n"
+
+    panel_title = "Monthly Net Profit"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
+    
 gross_profit_values_comparison(sheet)
 total_expenses_values_comparison(sheet)
+monthly_netprofit_values_comparison(sheet)
