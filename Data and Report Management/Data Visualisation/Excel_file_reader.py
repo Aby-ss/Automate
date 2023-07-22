@@ -1,4 +1,5 @@
 import openpyxl
+from datetime import datetime
 from tabulate import tabulate
 from openpyxl import load_workbook
 from openpyxl.formula import Tokenizer
@@ -150,7 +151,7 @@ def year_to_date_netporfit():
 # year_to_date_netporfit()
 
 # Functions for getting current and previous monthly values
-def gross_profit_values(sheet):
+def gross_profit_values_comparison(sheet):
     # Define the cell numbers for each month
     GROSS_PROFIT_month_cells = {
         'Jan': 'C6',
@@ -178,10 +179,6 @@ def gross_profit_values(sheet):
 
     panel_content = ""
 
-    for month, cell_number in GROSS_PROFIT_month_cells.items():
-        cell_value = sheet[cell_number].value
-        panel_content += f"{month} = {cell_value}\n"
-
     current_value = sheet[GROSS_PROFIT_month_cells[current_month]].value
     previous_value = sheet[GROSS_PROFIT_month_cells[previous_month]].value
 
@@ -191,3 +188,5 @@ def gross_profit_values(sheet):
     panel_title = "Gross Profit Values"
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     print(panel)
+    
+gross_profit_values_comparison(sheet)
