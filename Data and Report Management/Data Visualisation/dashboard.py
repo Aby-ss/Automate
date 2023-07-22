@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rich import print
 from rich import box
 from rich.tree import Tree
@@ -28,7 +30,7 @@ layout["Body"].split_column(
     Layout(name="Charts")
 )
 
-layout["Charts"].split(
+layout["Charts"].split_row(
     Layout(name="Bar Chart"),
     Layout(name="Line Graph")
 )
