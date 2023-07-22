@@ -28,6 +28,11 @@ layout["Body"].split_column(
     Layout(name="Charts")
 )
 
+layout["Charts"].split(
+    Layout(name="Bar Chart"),
+    Layout(name="Line Graph")
+)
+
 class Header:
 
     def __rich__(self) -> Panel:
