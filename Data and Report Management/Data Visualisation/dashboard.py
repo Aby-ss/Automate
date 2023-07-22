@@ -23,6 +23,11 @@ layout.split_column(
     Layout(name = "Footer", size=3)
 )
 
+layout["Body"].split_column(
+    Layout(name="Data"),
+    Layout(name="Charts")
+)
+
 class Header:
 
     def __rich__(self) -> Panel:
