@@ -206,9 +206,52 @@ def monthly_netprofits(sheet):
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     return panel
 
+def ytd_netprofits(sheet):
+    # Define the cell numbers for each month
+    YEAR_TO_DATE_NET_PROFIT_month_cells = {
+        'Jan': 'C9',
+        'Feb': 'D9',
+        'Mar': 'E9',
+        'Apr': 'G9',
+        'May': 'H9',
+        'Jun': 'I9',
+        'Jul': 'K9',
+        'Aug': 'L9',
+        'Sep': 'M9',
+        'Oct': 'O9',
+        'Nov': 'P9',
+        'Dec': 'Q9'
+    }
+
+    def get_previous_month(current_month):
+        months_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        current_index = months_list.index(current_month)
+        previous_index = (current_index - 1) % len(months_list)
+        return months_list[previous_index]
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    current_month = datetime.now().strftime("%b")
+    previous_month = get_previous_month(current_month)
+
+    panel_content = ""
+
+    current_value = sheet[YEAR_TO_DATE_NET_PROFIT_month_cells[current_month]].value
+    previous_value = sheet[YEAR_TO_DATE_NET_PROFIT_month_cells[previous_month]].value
+
+    panel_content += f"\nCurrent Month ({current_month}) Value = {current_value}\n"
+    panel_content += f"Previous Month ({previous_month}) Value = {previous_value}\n"
+
+    panel_title = "Monthly Net Profit"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    return panel
+
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
 layout["U1"].update(gross_values(sheet))
 layout["U2"].update(total_expenses(sheet))
 layout["U3"].update(monthly_netprofits(sheet))
+layout["U4"].update(ytd_netprofits(sheet))
 print(layout)
