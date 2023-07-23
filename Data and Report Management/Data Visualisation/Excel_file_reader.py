@@ -402,6 +402,7 @@ def other_values():
     
 # Function to print the cell value of all months
 def total_sales_values():
+
     # Define the cell numbers for each month
     TOTAL_SALES_month_cells = {
         'Jan': 'C22',
@@ -421,7 +422,20 @@ def total_sales_values():
     panel_content = ""
 
     for month, cell_number in TOTAL_SALES_month_cells.items():
-        cell_value = sheet[cell_number].value
+        cell = sheet[cell_number]
+
+        # Check if the cell contains a formula
+        if cell.data_type == "f":
+            cell_value = cell.calculate()
+        else:
+            cell_value = cell.value
+
+        # Convert the cell value to an integer if it's numeric, otherwise set it to 0
+        if isinstance(cell_value, (int, float)):
+            cell_value = int(cell_value)
+        else:
+            cell_value = 0
+
         panel_content += f"{month} = {cell_value}\n"
 
     panel_title = "Total Sales"
