@@ -345,5 +345,33 @@ def sales_values():
     panel_title = "Sales of Products/Services Values"
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     print(panel)
+    
+def commissions_values():
+    # Define the cell numbers for each month
+    COMMISSIONS_month_cells = {
+        'Jan': 'C20',
+        'Feb': 'D20',
+        'Mar': 'E20',
+        'Apr': 'G20',
+        'May': 'H20',
+        'Jun': 'I20',
+        'Jul': 'K20',
+        'Aug': 'L20',
+        'Sep': 'M20',
+        'Oct': 'O20',
+        'Nov': 'P20',
+        'Dec': 'Q20'
+    }
+
+    panel_content = ""
+
+    for month, cell_number in COMMISSIONS_month_cells.items():
+        cell_value = sheet[cell_number].value
+        panel_content += f"{month} = {cell_value}\n"
+
+    panel_title = "Commissions/Fees Values"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
 
 sales_values()
+commissions_values()
