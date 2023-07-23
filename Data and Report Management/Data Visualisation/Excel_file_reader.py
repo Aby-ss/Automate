@@ -150,6 +150,8 @@ def year_to_date_netporfit():
 # monthly_netprofit_values()
 # year_to_date_netporfit()
 
+# ------------------------- C O M P A R I S O N -----------------------
+
 # Functions for getting current and previous monthly values
 def gross_profit_values_comparison(sheet):
     # Define the cell numbers for each month
