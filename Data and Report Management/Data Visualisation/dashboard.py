@@ -88,10 +88,45 @@ class Footer:
         grid.add_row("[i]Empowering Growth through Intelligent Automation[/]")
         return Panel(grid, style="white on black")
     
-def gross_values():
-    from Excel_file_reader import gross_profit_values_comparison
+def gross_values(sheet):
+    # Define the cell numbers for each month
+    GROSS_PROFIT_month_cells = {
+        'Jan': 'C6',
+        'Feb': 'D6',
+        'Mar': 'E6',
+        'Apr': 'G6',
+        'May': 'H6',
+        'Jun': 'I6',
+        'Jul': 'K6',
+        'Aug': 'L6',
+        'Sep': 'M6',
+        'Oct': 'O6',
+        'Nov': 'P6',
+        'Dec': 'Q6'
+    }
+
+    def get_previous_month(current_month):
+        months_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        current_index = months_list.index(current_month)
+        previous_index = (current_index - 1) % len(months_list)
+        return months_list[previous_index]
+
+    current_month = datetime.now().strftime("%b")
+    previous_month = get_previous_month(current_month)
+
+    panel_content = ""
+
+    current_value = sheet[GROSS_PROFIT_month_cells[current_month]].value
+    previous_value = sheet[GROSS_PROFIT_month_cells[previous_month]].value
+
+    panel_content += f"\nCurrent Month ({current_month}) Value = {current_value}\n"
+    panel_content += f"Previous Month ({previous_month}) Value = {previous_value}\n"
+
+    panel_title = "Gross Profit Values"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    return panel
 
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
-layout["U1"].update(gross_values())
+layout["U1"].update(gross_values(sheet))
 print(layout)

@@ -448,4 +448,4 @@ print("-------------------------------------------------------------------------
 sales_values()
 commissions_values()
 other_values()
-total_sales_values()
+# total_sales_values()
