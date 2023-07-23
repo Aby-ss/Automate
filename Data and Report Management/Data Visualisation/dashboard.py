@@ -126,7 +126,46 @@ def gross_values(sheet):
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     return panel
 
+def total_expenses(sheet):
+    # Define the cell numbers for each month
+    TOTAL_EXPENSES_month_cells = {
+        'Jan': 'C7',
+        'Feb': 'D7',
+        'Mar': 'E7',
+        'Apr': 'G7',
+        'May': 'H7',
+        'Jun': 'I7',
+        'Jul': 'K7',
+        'Aug': 'L7',
+        'Sep': 'M7',
+        'Oct': 'O7',
+        'Nov': 'P7',
+        'Dec': 'Q7'
+    }
+
+    def get_previous_month(current_month):
+        months_list = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        current_index = months_list.index(current_month)
+        previous_index = (current_index - 1) % len(months_list)
+        return months_list[previous_index]
+
+    current_month = datetime.now().strftime("%b")
+    previous_month = get_previous_month(current_month)
+
+    panel_content = ""
+
+    current_value = sheet[TOTAL_EXPENSES_month_cells[current_month]].value
+    previous_value = sheet[TOTAL_EXPENSES_month_cells[previous_month]].value
+
+    panel_content += f"\nCurrent Month ({current_month}) Value = {current_value}\n"
+    panel_content += f"Previous Month ({previous_month}) Value = {previous_value}\n"
+
+    panel_title = "Total Expenses Values"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    return panel
+
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
 layout["U1"].update(gross_values(sheet))
+layout["U2"].update(total_expenses(sheet))
 print(layout)
