@@ -35,6 +35,14 @@ layout["Data"].split_column(
     Layout(name="Lower")
 )
 
+layout["Upper"].split_row(
+    Layout(name="U1"),
+    Layout(name="U2"),
+    Layout(name="U3"),
+    Layout(name="U4"),
+    Layout(name="U5")
+)
+
 layout["Charts"].split_row(
     Layout(name="Bar Chart"),
     Layout(name="Line Graph")
