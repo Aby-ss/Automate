@@ -23,6 +23,13 @@ from rich.traceback import install
 install(show_locals=True)
 
 layout = Layout()
+# Load the Excel file
+workbook = openpyxl.load_workbook('Examplery_data.xlsx')
+
+# Select the active sheet
+sheet = workbook.active
+
+
 
 layout.split_column(
     Layout(name = "Header", size=3),
