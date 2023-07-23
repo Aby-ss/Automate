@@ -318,3 +318,32 @@ gross_profit_values_comparison(sheet)
 total_expenses_values_comparison(sheet)
 monthly_netprofit_values_comparison(sheet)
 ytd_netprofit_values_comparison(sheet)
+
+def sales_values():
+    # Define the cell numbers for each month
+    SALES_month_cells = {
+        'Jan': 'C19',
+        'Feb': 'D19',
+        'Mar': 'E19',
+        'Apr': 'G19',
+        'May': 'H19',
+        'Jun': 'I19',
+        'Jul': 'K19',
+        'Aug': 'L19',
+        'Sep': 'M19',
+        'Oct': 'O19',
+        'Nov': 'P19',
+        'Dec': 'Q19'
+    }
+
+    panel_content = ""
+
+    for month, cell_number in SALES_month_cells.items():
+        cell_value = sheet[cell_number].value
+        panel_content += f"{month} = {cell_value}\n"
+
+    panel_title = "Sales of Products/Services Values"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
+
+sales_values()
