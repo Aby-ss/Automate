@@ -399,7 +399,37 @@ def other_values():
     panel_title = "Other Values"
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     print(panel)
+    
+# Function to print the cell value of all months
+def total_sales_values():
+    # Define the cell numbers for each month
+    TOTAL_SALES_month_cells = {
+        'Jan': 'C22',
+        'Feb': 'D22',
+        'Mar': 'E22',
+        'Apr': 'G22',
+        'May': 'H22',
+        'Jun': 'I22',
+        'Jul': 'K22',
+        'Aug': 'L22',
+        'Sep': 'M22',
+        'Oct': 'O22',
+        'Nov': 'P22',
+        'Dec': 'Q22'
+    }
 
+    panel_content = ""
+
+    for month, cell_number in TOTAL_SALES_month_cells.items():
+        cell_value = sheet[cell_number].value
+        panel_content += f"{month} = {cell_value}\n"
+
+    panel_title = "Total Sales"
+    panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
+    print(panel)
+
+print("-----------------------------------------------------------------------------")
 sales_values()
 commissions_values()
 other_values()
+total_sales_values()
