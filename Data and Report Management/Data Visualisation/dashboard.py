@@ -87,7 +87,11 @@ class Footer:
         grid.add_column(justify="center", ratio=1)
         grid.add_row("[i]Empowering Growth through Intelligent Automation[/]")
         return Panel(grid, style="white on black")
+    
+def gross_values():
+    from Excel_file_reader import gross_profit_values_comparison
 
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
+layout["U1"].update(gross_values())
 print(layout)
