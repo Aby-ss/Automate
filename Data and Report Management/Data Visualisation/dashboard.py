@@ -30,6 +30,11 @@ layout["Body"].split_column(
     Layout(name="Charts")
 )
 
+layout["Data"].split_column(
+    Layout(name="Upper"),
+    Layout(name="Lower")
+)
+
 layout["Charts"].split_row(
     Layout(name="Bar Chart"),
     Layout(name="Line Graph")
