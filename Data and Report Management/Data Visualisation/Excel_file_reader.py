@@ -3,6 +3,7 @@ from datetime import datetime
 from tabulate import tabulate
 from openpyxl import load_workbook
 from openpyxl.formula import Tokenizer
+import asciichartpy
 
 from rich import print
 from rich import box
@@ -449,3 +450,39 @@ sales_values()
 commissions_values()
 other_values()
 # total_sales_values()
+
+# ------------------------------------- G R A P H I N G ----------------------------------
+
+def monthly_netprofit_graph():
+    # Define the cell numbers for each month
+    MONTHY_NET_PROFIT_month_cells = {
+        'Jan': 'C8',
+        'Feb': 'D8',
+        'Mar': 'E8',
+        'Apr': 'G8',
+        'May': 'H8',
+        'Jun': 'I8',
+        'Jul': 'K8',
+        'Aug': 'L8',
+        'Sep': 'M8',
+        'Oct': 'O8',
+        'Nov': 'P8',
+        'Dec': 'Q8'
+    }
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    # Initialize a list to store the net profit values
+    net_profit_values = []
+
+    for month, cell_number in MONTHY_NET_PROFIT_month_cells.items():
+        cell_value = sheet[cell_number].value
+        net_profit_values.append(cell_value)
+
+    # Plot the graph using asciichartpy
+    chart = asciichartpy.plot(net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
+    print(chart)
+    
+monthly_netprofit_graph()
