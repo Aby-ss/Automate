@@ -38,30 +38,17 @@ layout.split_column(
 )
 
 layout["Body"].split_column(
-    Layout(name="Data"),
+    Layout(name="Data", size=7),
     Layout(name="Charts")
 )
 
-layout["Data"].split_column(
-    Layout(name="Upper"),
-    Layout(name="Lower")
-)
-
-layout["Upper"].split_row(
+layout["Data"].split_row(
     Layout(name="U1"),
     Layout(name="U2"),
     Layout(name="U3"),
-    Layout(name="U4"),
-    Layout(name="U5")
+    Layout(name="U4")
 )
 
-layout["Lower"].split_row(
-    Layout(name="L1"),
-    Layout(name="L2"),
-    Layout(name="L3"),
-    Layout(name="L4"),
-    Layout(name="L5")
-)
 
 layout["Charts"].split_row(
     Layout(name="Bar Chart"),
