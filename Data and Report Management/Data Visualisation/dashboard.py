@@ -50,9 +50,19 @@ layout["Data"].split_row(
 )
 
 
-layout["Charts"].split_row(
-    Layout(name="Bar Chart"),
-    Layout(name="Line Graph")
+layout["Charts"].split_column(
+    Layout(name="Upper_charts"),
+    Layout(name="Lower_charts")
+)
+
+layout["Upper_charts"].split_row(
+    Layout(name="Upper_chart1"),
+    Layout(name="Upper_chart2")
+)
+
+layout["Lower_charts"].split_row(
+    Layout(name="Lower_chart1"),
+    Layout(name="Lower_chart2")
 )
 
 class Header:
