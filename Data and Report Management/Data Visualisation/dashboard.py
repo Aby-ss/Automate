@@ -4,6 +4,7 @@ from datetime import datetime
 from tabulate import tabulate
 from openpyxl import load_workbook
 from openpyxl.formula import Tokenizer
+import asciichartpy
 
 from rich import print
 from rich import box
@@ -245,10 +246,43 @@ def ytd_netprofits(sheet):
     panel = Panel.fit(panel_content, title=panel_title, title_align="left", border_style="bold white", box=box.SQUARE)
     return panel
 
+def gross_profits_charts():
+    # Define the cell numbers for each month
+    GROSS_PROFIT_month_cells = {
+        'Jan': 'C6',
+        'Feb': 'D6',
+        'Mar': 'E6',
+        'Apr': 'G6',
+        'May': 'H6',
+        'Jun': 'I6',
+        'Jul': 'K6',
+        'Aug': 'L6',
+        'Sep': 'M6',
+        'Oct': 'O6',
+        'Nov': 'P6',
+        'Dec': 'Q6'
+    }
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    # Initialize a list to store the net profit values
+    gross_profit_values = []
+
+    for month, cell_number in GROSS_PROFIT_month_cells.items():
+        cell_value = sheet[cell_number].value
+        gross_profit_values.append(cell_value)
+
+    # Plot the graph using asciichartpy
+    chart = asciichartpy.plot(gross_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
+    return Panel(chart, title="Gross Profit values chart", box=box.SQUARE)
+
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
 layout["U1"].update(gross_values(sheet))
 layout["U2"].update(total_expenses(sheet))
 layout["U3"].update(monthly_netprofits(sheet))
 layout["U4"].update(ytd_netprofits(sheet))
+layout["Upper_chart1"].update(gross_profits_charts())
 print(layout)
