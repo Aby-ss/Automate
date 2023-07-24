@@ -550,6 +550,39 @@ def monthly_netprofit_graph():
     chart = asciichartpy.plot(net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
     print(chart)
     
+def ytd_netprofit_graph():
+    # Define the cell numbers for each month
+    YTD_NET_PROFIT_month_cells = {
+        'Jan': 'C9',
+        'Feb': 'D9',
+        'Mar': 'E9',
+        'Apr': 'G9',
+        'May': 'H9',
+        'Jun': 'I9',
+        'Jul': 'K9',
+        'Aug': 'L9',
+        'Sep': 'M9',
+        'Oct': 'O9',
+        'Nov': 'P9',
+        'Dec': 'Q9'
+    }
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    # Initialize a list to store the net profit values
+    ytd_net_profit_values = []
+
+    for month, cell_number in YTD_NET_PROFIT_month_cells.items():
+        cell_value = sheet[cell_number].value
+        ytd_net_profit_values.append(cell_value)
+
+    # Plot the graph using asciichartpy
+    chart = asciichartpy.plot(ytd_net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
+    print(chart)
+    
 gross_profit_graph()
 total_expenses_graph()
 monthly_netprofit_graph()
+ytd_netprofit_graph()
