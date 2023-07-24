@@ -278,6 +278,38 @@ def gross_profits_charts():
     chart = asciichartpy.plot(gross_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
     return Panel(chart, title="Gross Profit values chart", box=box.SQUARE)
 
+def monthly_netprofit_charts():
+    # Define the cell numbers for each month
+    MONTHLY_NET_PROFIT_month_cells = {
+        'Jan': 'C8',
+        'Feb': 'D8',
+        'Mar': 'E8',
+        'Apr': 'G8',
+        'May': 'H8',
+        'Jun': 'I8',
+        'Jul': 'K8',
+        'Aug': 'L8',
+        'Sep': 'M8',
+        'Oct': 'O8',
+        'Nov': 'P8',
+        'Dec': 'Q8'
+    }
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    # Initialize a list to store the net profit values
+    net_profit_values = []
+
+    for month, cell_number in MONTHLY_NET_PROFIT_month_cells.items():
+        cell_value = sheet[cell_number].value
+        net_profit_values.append(cell_value)
+
+    # Plot the graph using asciichartpy
+    chart = asciichartpy.plot(net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
+    return Panel(chart, title="Monthly Net-Profit values chart", box=box.SQUARE)
+
 layout["Header"].update(Header())
 layout["Footer"].update(Footer())
 layout["U1"].update(gross_values(sheet))
@@ -285,4 +317,5 @@ layout["U2"].update(total_expenses(sheet))
 layout["U3"].update(monthly_netprofits(sheet))
 layout["U4"].update(ytd_netprofits(sheet))
 layout["Upper_chart1"].update(gross_profits_charts())
+layout["Upper_chart2"].update(monthly_netprofit_charts())
 print(layout)
