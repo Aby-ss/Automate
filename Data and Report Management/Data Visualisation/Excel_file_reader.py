@@ -550,6 +550,6 @@ def monthly_netprofit_graph():
     chart = asciichartpy.plot(net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
     print(chart)
     
-monthly_netprofit_graph()
-total_expenses_graph()
 gross_profit_graph()
+total_expenses_graph()
+monthly_netprofit_graph()
