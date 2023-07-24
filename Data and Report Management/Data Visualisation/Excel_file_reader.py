@@ -453,9 +453,41 @@ other_values()
 
 # ------------------------------------- G R A P H I N G ----------------------------------
 
+def total_expenses_graph():
+    # Define the cell numbers for each month
+    TOTAL_EXPENSES_month_cells = {
+        'Jan': 'C7',
+        'Feb': 'D7',
+        'Mar': 'E7',
+        'Apr': 'G7',
+        'May': 'H7',
+        'Jun': 'I7',
+        'Jul': 'K7',
+        'Aug': 'L7',
+        'Sep': 'M7',
+        'Oct': 'O7',
+        'Nov': 'P7',
+        'Dec': 'Q7'
+    }
+
+    # Load the workbook in read-only mode with data_only set to True to evaluate formulas
+    wb = load_workbook('Examplery_data.xlsx', read_only=True, data_only=True)
+    sheet = wb.active
+
+    # Initialize a list to store the net profit values
+    net_profit_values = []
+
+    for month, cell_number in TOTAL_EXPENSES_month_cells.items():
+        cell_value = sheet[cell_number].value
+        net_profit_values.append(cell_value)
+
+    # Plot the graph using asciichartpy
+    chart = asciichartpy.plot(net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
+    print(chart)
+
 def monthly_netprofit_graph():
     # Define the cell numbers for each month
-    MONTHY_NET_PROFIT_month_cells = {
+    MONTHLY_NET_PROFIT_month_cells = {
         'Jan': 'C8',
         'Feb': 'D8',
         'Mar': 'E8',
@@ -477,7 +509,7 @@ def monthly_netprofit_graph():
     # Initialize a list to store the net profit values
     net_profit_values = []
 
-    for month, cell_number in MONTHY_NET_PROFIT_month_cells.items():
+    for month, cell_number in MONTHLY_NET_PROFIT_month_cells.items():
         cell_value = sheet[cell_number].value
         net_profit_values.append(cell_value)
 
@@ -486,3 +518,4 @@ def monthly_netprofit_graph():
     print(chart)
     
 monthly_netprofit_graph()
+total_expenses_graph()
