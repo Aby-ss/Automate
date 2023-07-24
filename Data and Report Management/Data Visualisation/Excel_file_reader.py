@@ -475,14 +475,14 @@ def total_expenses_graph():
     sheet = wb.active
 
     # Initialize a list to store the net profit values
-    net_profit_values = []
+    total_expenses_values = []
 
     for month, cell_number in TOTAL_EXPENSES_month_cells.items():
         cell_value = sheet[cell_number].value
-        net_profit_values.append(cell_value)
+        total_expenses_values.append(cell_value)
 
     # Plot the graph using asciichartpy
-    chart = asciichartpy.plot(net_profit_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
+    chart = asciichartpy.plot(total_expenses_values, {"width": 50, "height": 10, "format": "{:,.2f}"})
     print(chart)
 
 def monthly_netprofit_graph():
